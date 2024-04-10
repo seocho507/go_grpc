@@ -1,0 +1,38 @@
+syntax = "proto3";
+option go_package = "/auth";
+
+enum ResponseType {
+  OK = 0;
+  ERROR = 1;
+  EXPIRED = 2;
+}
+
+message Auth {
+  string name = 1;
+  string token = 2;
+  int64 created = 3;
+  int64 expires = 4;
+}
+
+message CreateTokenRequest {
+  Auth auth = 1;
+}
+
+message CreateTokenResponse {
+  ResponseType type = 1;
+  Auth auth = 2;
+}
+
+message ValidateTokenRequest {
+  string token = 1;
+}
+
+message ValidateTokenResponse {
+  ResponseType type = 1;
+  Auth auth = 2;
+}
+
+service AuthService {
+  rpc CreateToken(CreateTokenRequest) returns (CreateTokenResponse);
+  rpc ValidateToken(ValidateTokenRequest) returns (ValidateTokenResponse);
+}

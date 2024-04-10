@@ -3,6 +3,7 @@ package paseto
 import (
 	"github.com/o1egl/paseto"
 	"go_grpc/config"
+	"log"
 )
 
 type PasetoMaker struct {
@@ -17,8 +18,12 @@ func NewPasetoMaker(config *config.Config) *PasetoMaker {
 	}
 }
 
-func (p *PasetoMaker) CreateToken(data string) (string, error) {
-	return p.Pt.Encrypt(p.Key, []byte(data), nil)
+func (p *PasetoMaker) CreateToken(data string) string {
+	token, err := p.Pt.Encrypt(p.Key, []byte(data), nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return token
 }
 
 func (p *PasetoMaker) VerifyToken(token string) (string, error) {
