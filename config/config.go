@@ -6,7 +6,11 @@ import (
 	"os"
 )
 
-type Config struct{}
+type Config struct {
+	Paseto struct {
+		Key string
+	}
+}
 
 func NewConfig(path string) (*Config, error) {
 	file, err := os.Open(path)

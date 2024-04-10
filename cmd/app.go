@@ -31,10 +31,13 @@ func NewApp(config *config.Config) (*App, error) {
 		return nil, fmt.Errorf("failed to create network: %w", err)
 	}
 
-	return &App{
+	app := &App{
 		config:     config,
 		service:    svc,
 		network:    net,
 		repository: repo,
-	}, nil
+	}
+
+	app.network.StartServer()
+	return app, nil
 }
