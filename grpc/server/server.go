@@ -49,7 +49,7 @@ func NewGRPCServer(cfg *config.Config) (*GRPCServer, error) {
 	return grpcServer, nil
 }
 
-func (s *GRPCServer) CreateToken(ctx context.Context, req *authpb.CreateTokenRequest) (*authpb.CreateTokenResponse, error) {
+func (s *GRPCServer) CreateToken(_ context.Context, req *authpb.CreateTokenRequest) (*authpb.CreateTokenResponse, error) {
 	data := req.GetAuth()
 	token := data.GetToken()
 	s.tokenVerifiers[token] = data
@@ -60,7 +60,7 @@ func (s *GRPCServer) CreateToken(ctx context.Context, req *authpb.CreateTokenReq
 	}, nil
 }
 
-func (s *GRPCServer) ValidateToken(ctx context.Context, req *authpb.ValidateTokenRequest) (*authpb.ValidateTokenResponse, error) {
+func (s *GRPCServer) ValidateToken(_ context.Context, req *authpb.ValidateTokenRequest) (*authpb.ValidateTokenResponse, error) {
 	token := req.GetToken()
 	data, err := s.getTokenData(token)
 	if err != nil {
